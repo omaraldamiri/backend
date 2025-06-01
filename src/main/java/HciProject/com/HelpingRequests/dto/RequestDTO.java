@@ -13,9 +13,10 @@ public class RequestDTO {
     private LocalDate requestedDate;
     private LocalTime requestedTime;
     private Long creatorId;
+    private User user;
     public RequestDTO() {}
 
-    public RequestDTO(Request request, User user) {
+    public RequestDTO(Request request) {
         this.requestBody = request.getRequestBody();
         this.location = request.getLocation();
         this.requestedDate = request.getRequestedDate();
@@ -45,6 +46,7 @@ public class RequestDTO {
         this.location = location;
     }
 
+    
 
     public LocalDate getRequestedDate() {
         return requestedDate;
@@ -68,5 +70,12 @@ public class RequestDTO {
 
     public void setCreatorName(String creatorName) {
         this.creatorName = creatorName;
+    }
+
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user=user;
     }
 }
