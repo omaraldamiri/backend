@@ -40,6 +40,9 @@ public class RequestController {
     public ResponseEntity<String> createRequest(@RequestBody RequestDTO requestDTO,HttpSession httpSession){
 
         User user=(User) httpSession.getAttribute("user");
+        if(user==null){
+            user=userService.getUserById((long) 1);
+        }
         requestDTO.setCreatorId(user.getId());
         if(requestService.createRequest(requestDTO).equals("Error detected"))
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("ID Not found");
