@@ -21,7 +21,8 @@ public class RequestDTO {
         this.requestedDate = request.getRequestedDate();
         this.requestedTime = request.getRequestedTime();
         this.creatorName = user.getFirstName() + " " + user.getLastName();
-        this.creatorId=request.getCreatorId();
+        // this.creatorId=request.getCreatorId();
+        this.creatorId=user.getId();
     }
 
     public String getRequestBody() {
@@ -44,9 +45,6 @@ public class RequestDTO {
         this.location = location;
     }
 
-    public void setCreatorId(Long creatorId) {
-        this.creatorId = creatorId;
-    }
 
     public LocalDate getRequestedDate() {
         return requestedDate;
