@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/apis")
@@ -37,17 +38,18 @@ public class RequestController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createRequest(@RequestBody RequestDTO requestDTO,HttpSession httpSession){
-
-        User user=(User) httpSession.getAttribute("user");
-        if(user==null){
-            user=userService.getUserById((long) 1);
+    public ResponseEntity<?> createRequest(@RequestBody RequestDTO requestDTO, HttpSession httpSession) {
+        User user = (User) httpSession.getAttribute("user");
+        if (user == null) {
+            user = userService.getUserById((long) 1);
         }
         requestDTO.setCreatorId(user.getId());
-        if(requestService.createRequest(requestDTO).equals("Error detected"))
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("ID Not found");
-            else
-                return ResponseEntity.ok("Request Created!");
+        if (requestService.createRequest(requestDTO).equals("Error detected")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("status", "error", "message", "ID Not found"));
+        } else {
+            return ResponseEntity.ok(Map.of("status", "success", "message", "Request Created!"));
+        }
     }
 
     @PatchMapping("/{id}/complete")
