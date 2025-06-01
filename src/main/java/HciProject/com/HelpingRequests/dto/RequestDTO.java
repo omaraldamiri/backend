@@ -16,13 +16,14 @@ public class RequestDTO {
     private User user;
     public RequestDTO() {}
 
-    public RequestDTO(Request request) {
+    public RequestDTO(Request request,User user) {
         this.requestBody = request.getRequestBody();
         this.location = request.getLocation();
         this.requestedDate = request.getRequestedDate();
         this.requestedTime = request.getRequestedTime();
         this.creatorName = user.getFirstName() + " " + user.getLastName();
         // this.creatorId=request.getCreatorId();
+        this.user=user;
         this.creatorId=user.getId();
     }
 
