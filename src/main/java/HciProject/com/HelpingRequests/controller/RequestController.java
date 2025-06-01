@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/apis")
@@ -36,6 +39,14 @@ public class RequestController {
         return userService.returnUsers();
 
     }
+    @GetMapping("/currentUser")
+    public User getCurrentUser(HttpSession session) {
+
+        User user = (User)session.getAttribute("user");
+        
+        return user;
+    }
+    
 
     @PostMapping("/create")
     public ResponseEntity<?> createRequest(@RequestBody RequestDTO requestDTO, HttpSession httpSession) {
