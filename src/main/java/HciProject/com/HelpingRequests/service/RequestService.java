@@ -37,7 +37,7 @@ public class RequestService {
             Optional<User> userOptional=userRepository.findById(requestDTO.getCreatorId());
 
             if(!userOptional.isPresent()) {
-                return "Wrong id";
+                return "Error Detected";
             }
             User user=userOptional.get();
             Request request=new Request();

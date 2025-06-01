@@ -37,8 +37,11 @@ public class RequestController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createRequest(@RequestBody RequestDTO requestDTO){
-        if(requestService.createRequest(requestDTO).equals("Wrong id"))
+    public ResponseEntity<String> createRequest(@RequestBody RequestDTO requestDTO,HttpSession httpSession){
+
+        User user=(User) httpSession.getAttribute("user");
+        requestDTO.setCreatorId(user.getId());
+        if(requestService.createRequest(requestDTO).equals("Error detected"))
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("ID Not found");
             else
                 return ResponseEntity.ok("Request Created!");

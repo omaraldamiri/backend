@@ -38,7 +38,9 @@ public class RequestDTO {
     public Long getCreatorId() {
         return creatorId;
     }
-
+    public void setCreatorId(Long creatorId) {
+        this.creatorId = creatorId;
+    }
     public void setRequestBody(String requestBody) {
         this.requestBody = requestBody;
     }
@@ -79,4 +81,6 @@ public class RequestDTO {
     public void setUser(User user) {
         this.user=user;
     }
+
+    
 }
