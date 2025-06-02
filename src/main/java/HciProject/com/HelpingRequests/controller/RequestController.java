@@ -55,6 +55,7 @@ public class RequestController {
             user = userService.getUserById((long) 1);
         }
         requestDTO.setCreatorId(user.getId());
+        // requestDTO.setCreatorName(user.getUsername());
         if (requestService.createRequest(requestDTO).equals("Error detected")) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(Map.of("status", "error", "message", "ID Not found"));
