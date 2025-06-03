@@ -7,6 +7,7 @@ import HciProject.com.HelpingRequests.service.RequestService;
 import HciProject.com.HelpingRequests.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,7 @@ public class RequestController {
         this.userService = userService;
     }
     @GetMapping("/requests")
-    public List<RequestDTO> getRequests(){
+    public List<Request> getRequests(){
         return requestService.returnAvaiableRequests();
 
     }
@@ -56,25 +57,39 @@ public class RequestController {
         }
         requestDTO.setCreatorId(user.getId());
         // requestDTO.setCreatorName(user.getUsername());
-        if (requestService.createRequest(requestDTO).equals("Error detected")) {
+        if (requestService.createRequest(requestDTO) == 0) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(Map.of("status", "error", "message", "ID Not found"));
         } else {
-            return ResponseEntity.ok(Map.of("status", "success", "message", "Request Created!"));
+
+            return ResponseEntity.ok(Map.of("status", "success", "message", "Request Created!","id",requestDTO.getId()));
+
         }
     }
 
     @PatchMapping("/{id}/complete")
     public ResponseEntity<String> updateBoolean(@PathVariable Long id, HttpSession httpSession){
-        if(requestService.updateStatus(id).equals("Request not found"))
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Request not found");
-//        User user=(User) httpSession.getAttribute("user");
-//        if(requestService.getRequestById(id).getCreatorId()!=user.getId())
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You are not the owner of the request");
-        requestService.updateStatus(id);
-        return ResponseEntity.ok("Request Completed");
+        // if(requestService.updateStatus(id).equals("Request not found"))
+        //     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Request not found");
+    // User user=(User) httpSession.getAttribute("user");
+    // if(requestService.getRequestById(id).getCreatorId()!=user.getId())
+    //     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You are not the owner of the request");
+    //     requestService.updateStatus(id);
+    //     return ResponseEntity.ok("Request Completed");
 
 
+        User user = (User) httpSession.getAttribute("user");
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No User Found");
+        }
+
+        Request req = requestService.getRequestById((long)id);
+        if(user.getId() != req.getCreatorId()){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You are not the owner of the request");
+        }
+        requestService.updateStatus((long)id);
+
+    return ResponseEntity.ok("success");
     }
 
 

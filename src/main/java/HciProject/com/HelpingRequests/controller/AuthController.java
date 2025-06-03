@@ -35,6 +35,9 @@ public class AuthController {
             User user=userService.getUserByUsername(request.getUsername());
             session.setAttribute("user",user);
 
+            System.out.println("Session ID: " + session.getId());
+
+
             return ResponseEntity.ok("Login Successful");
         }
     }

@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-HelpingRequestsApplication<HelpingRequests>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "HciProject.com.HelpingRequests.HelpingRequestsApplication",
+            "projectName": "HelpingRequests",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

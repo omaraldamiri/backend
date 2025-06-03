@@ -24,20 +24,16 @@ public class RequestService {
 
     }
 
-    public List<RequestDTO> returnAvaiableRequests() {
+    public List<Request> returnAvaiableRequests() {
         List<Request> list = requestRepository.findByIsDoneOrderByCreatedAtDesc(false);
-        List<RequestDTO> dto = new ArrayList<>();
-        for (Request r : list) {
-            userRepository.findById(r.getCreatorId()).ifPresent(user->dto.add(new RequestDTO(r,user)));
-        }
-        return dto;
+        return list;
     }
 
-    public String createRequest(RequestDTO requestDTO){
+    public long createRequest(RequestDTO requestDTO){
             Optional<User> userOptional=userRepository.findById(requestDTO.getCreatorId());
 
             if(!userOptional.isPresent()) {
-                return "Error Detected";
+                return 0;
             }
             User user=userOptional.get();
             Request request=new Request();
@@ -49,7 +45,7 @@ public class RequestService {
             request.setContactNumber(user.getPhoneNumber());
             requestRepository.save(request);
 
-            return "Request has been created with the name " + user.getFirstName() + " " + user.getLastName();
+            return request.getId();
 
 
 

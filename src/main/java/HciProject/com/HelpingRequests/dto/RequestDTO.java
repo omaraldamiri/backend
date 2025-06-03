@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class RequestDTO {
+    private long id;
     private String creatorName;
     private String requestBody;
     private String location;
@@ -25,7 +26,10 @@ public class RequestDTO {
         // this.creatorId=request.getCreatorId();
         this.user=user;
         this.creatorId=user.getId();
+        this.id= request.getId();
     }
+
+    
 
     public String getRequestBody() {
         return requestBody;
@@ -80,6 +84,14 @@ public class RequestDTO {
     }
     public void setUser(User user) {
         this.user=user;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     
