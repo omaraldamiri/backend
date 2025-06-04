@@ -24,13 +24,23 @@ public class RequestService {
 
     }
 
-    public List<Request> getRequestByCreatorId(long id){
-        return requestRepository.findByCreatorId(id);
+    public List<RequestDTO> getRequestByCreatorId(long id){
+        var requests = requestRepository.findByCreatorIdAndIsDone(id,false);
+        var dtos = new ArrayList<RequestDTO>();
+        for (Request request : requests) {
+            dtos.add(new RequestDTO(request, userRepository.findById(id).get()));
+        }
+        return dtos;
     }
 
-    public List<Request> returnAvaiableRequests() {
-        List<Request> list = requestRepository.findByIsDoneOrderByCreatedAtDesc(false);
-        return list;
+    public List<RequestDTO> returnAvaiableRequests() {
+        
+        var requests = requestRepository.findByIsDoneOrderByCreatedAtDesc(false);
+        var dtos = new ArrayList<RequestDTO>();
+        for (Request request : requests) {
+            dtos.add(new RequestDTO(request,userRepository.findById(request.getCreatorId()).get()));
+        }
+        return dtos;
     }
 
     public long createRequest(RequestDTO requestDTO){

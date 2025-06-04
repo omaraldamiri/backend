@@ -30,7 +30,7 @@ public class RequestController {
         this.userService = userService;
     }
     @GetMapping("/requests")
-    public List<Request> getRequests(){
+    public List<RequestDTO> getRequests(){
         return requestService.returnAvaiableRequests();
 
     }
@@ -49,7 +49,7 @@ public class RequestController {
     }
 
     @GetMapping("/yourRequests")
-    public List<Request> getUserRequests(HttpSession session) {
+    public List<RequestDTO> getUserRequests(HttpSession session) {
         User user = (User) session.getAttribute("user");
 
         if(user==null) throw new RuntimeException("cannot show requests,log in first");

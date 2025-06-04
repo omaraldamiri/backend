@@ -15,6 +15,8 @@ public class RequestDTO {
     private LocalTime requestedTime;
     private Long creatorId;
     private User user;
+    private String phoneNumber;
+
     public RequestDTO() {}
 
     public RequestDTO(Request request,User user) {
@@ -27,8 +29,10 @@ public class RequestDTO {
         this.user=user;
         this.creatorId=user.getId();
         this.id= request.getId();
+        this.phoneNumber = user.getPhoneNumber();
     }
 
+    
     
 
     public String getRequestBody() {
