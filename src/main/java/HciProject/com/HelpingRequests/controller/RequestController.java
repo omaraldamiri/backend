@@ -47,6 +47,18 @@ public class RequestController {
         
         return user;
     }
+
+    @GetMapping("/yourRequests")
+    public List<Request> getUserRequests(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+
+        if(user==null) throw new RuntimeException("cannot show requests,log in first");
+
+        else{
+            return requestService.getRequestByCreatorId(user.getId());
+        }
+    }
+    
     
 
     @PostMapping("/create")

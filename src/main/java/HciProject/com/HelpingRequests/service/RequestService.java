@@ -24,6 +24,10 @@ public class RequestService {
 
     }
 
+    public List<Request> getRequestByCreatorId(long id){
+        return requestRepository.findByCreatorId(id);
+    }
+
     public List<Request> returnAvaiableRequests() {
         List<Request> list = requestRepository.findByIsDoneOrderByCreatedAtDesc(false);
         return list;
