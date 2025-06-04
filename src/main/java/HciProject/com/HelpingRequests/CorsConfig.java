@@ -29,7 +29,7 @@ public class CorsConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         // Allowing requests from your frontend
         registry.addMapping("/**") // Apply to all endpoints
-                .allowedOrigins("http://localhost:3000") // Change to your frontend URL
+                .allowedOrigins("https://y-zer0.github.io") // Change to your frontend URL
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS","PATCH") // Allow these methods
                 .allowedHeaders("*")
                 .allowCredentials(true); // Allow all headers (you can restrict if needed)
