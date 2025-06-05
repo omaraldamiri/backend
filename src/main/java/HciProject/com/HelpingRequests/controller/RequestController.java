@@ -29,6 +29,13 @@ public class RequestController {
         this.requestService = requestService;
         this.userService = userService;
     }
+
+
+    @GetMapping("/ping")
+    public String ping() {
+        return "pong";
+    }
+    
     @GetMapping("/requests")
     public List<RequestDTO> getRequests(){
         return requestService.returnAvaiableRequests();
