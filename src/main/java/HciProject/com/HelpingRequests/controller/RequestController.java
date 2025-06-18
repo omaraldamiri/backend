@@ -71,11 +71,13 @@ public class RequestController {
     @PostMapping("/create")
     public ResponseEntity<?> createRequest(@RequestBody RequestDTO requestDTO, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
-        if (user == null) {
-            user = userService.getUserById((long) 1);
+        if (user == null) { //! this was used for debuggin so that it doesn't require a user 
+            // user = userService.getUserById((long) 1);
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("status","error","message","current user unavailable , log out and log in again"));
+
         }
         requestDTO.setCreatorId(user.getId());
-        // requestDTO.setCreatorName(user.getUsername());
         if (requestService.createRequest(requestDTO) == 0) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(Map.of("status", "error", "message", "ID Not found"));

@@ -43,13 +43,18 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterRequest registerRequest){
+    public ResponseEntity<String> register(@RequestBody RegisterRequest registerRequest , HttpSession session){
         String s=userService.registerUser(registerRequest);
         if(s.equals("Username is taken!"))
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Username is taken!");
-        else
+        else{
+            User user=userService.getUserByUsername(registerRequest.getUsername());
+            session.setAttribute("user",user);            
             return ResponseEntity.ok("Registered Successfully");
+        }
     }
+
+
     @GetMapping("/profile")
     public ResponseEntity<String> profileInformation(HttpSession httpSession){
         User user=(User) httpSession.getAttribute("user");
